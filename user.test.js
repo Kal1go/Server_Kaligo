@@ -1,5 +1,5 @@
 const request = require('supertest');
-const server = require('../');
+const app = require('../app');
 
 const UserModel = {
   name: 'Kaligo',
@@ -8,9 +8,20 @@ const UserModel = {
   _id: '507f191e810c19729de860ea',
 };
 
-describe('Login', function() {
+describe('', function() {
+  it('Read Users', function(done) {
+    request(app)
+        .get('/api/user/get/all')
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .end(function(err, res) {
+          if (err) return done(err);
+          done();
+        });
+  });
   it('Create User', function(done) {
-    request(server)
+    request(app)
         .post('/api/user/create')
         .send(UserModel)
         .set('Accept', 'application/json')
