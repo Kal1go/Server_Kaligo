@@ -1,3 +1,4 @@
+/* eslint-disable no-invalid-this */
 const {UserModel} = require('./user.model');
 
 module.exports = {
@@ -44,7 +45,7 @@ module.exports = {
     const params = req.params || {};
     try {
       if (!params.id) {
-        throw new Error('Id is required');
+        throw new Error('`_id` é requirido.');
       }
       res.json({
         success: true,
@@ -78,9 +79,12 @@ module.exports = {
       const user = await UserModel.findOne({appleID});
 
       if (!user) {
-        return res.status(401).json({
-          success: false,
-          message: 'Usuário não encontrado!',
+        const user = await new UserModel(body);
+        await user.save();
+        return res.json({
+          success: true,
+          message: 'Pessoa criada com successo!',
+          content: user,
         });
       }
 
@@ -91,7 +95,5 @@ module.exports = {
     } catch (error) {
       return next(error);
     }
-
-    return;
   },
 };

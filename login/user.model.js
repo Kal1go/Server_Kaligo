@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const User = new Schema(
     {
       appleID: {type: String, required: true, unique: true},
-      email: {type: String, required: true},
+      email: {type: String},
       name: {type: String, required: true},
     },
     {timestamps: true},
