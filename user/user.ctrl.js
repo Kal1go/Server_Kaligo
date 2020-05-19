@@ -10,7 +10,7 @@ module.exports = {
         message: 'Usuários encontrados!',
       });
     } catch (error) {
-      res.status(404).json({
+      res.status(400).json({
         success: false,
         message: error.message,
       });
@@ -21,7 +21,7 @@ module.exports = {
       const body = req.body || {};
       const previusUser = await UserModel.findOne({email: body.email});
       if (previusUser) {
-        return res.status(402).json({
+        return res.status(400).json({
           success: false,
           message: 'E-mail já cadastrado!',
         });
@@ -35,7 +35,7 @@ module.exports = {
         content: user,
       });
     } catch (error) {
-      res.status(402).json({
+      res.status(400).json({
         success: false,
         message: error.message,
       });
@@ -52,7 +52,7 @@ module.exports = {
         content: await UserModel.findByIdAndDelete(params.id),
       });
     } catch (error) {
-      res.status(402).json({
+      res.status(400).json({
         success: false,
         message: error.message,
       });
@@ -65,7 +65,7 @@ module.exports = {
         content: await UserModel.deleteMany({}),
       });
     } catch (error) {
-      res.status(402).json({
+      res.status(400).json({
         success: false,
         message: error.message,
       });
