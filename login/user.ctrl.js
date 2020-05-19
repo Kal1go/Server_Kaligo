@@ -1,5 +1,4 @@
 const {UserModel} = require('./user.model');
-const {validateBody} = require('../utils/validateBody');
 
 module.exports = {
   getAll: async (req, res, next) => {
@@ -19,9 +18,6 @@ module.exports = {
   create: async (req, res, next) => {
     try {
       const body = req.body || {};
-      if (validateBody(body)) {
-        throw new Error('Body não encontrado');
-      }
       const previusUser = await UserModel.findOne({email: body.email});
       if (previusUser) {
         return res.status(402).json({
@@ -30,7 +26,6 @@ module.exports = {
         });
       }
       const user = await new UserModel(body);
-      user.password = await user.hash(next);
       await user.save();
 
       return res.json({
@@ -77,10 +72,6 @@ module.exports = {
   },
   authenticate: async (req, res, next) => {
     const body = req.body || {};
-    if (validateBody(body)) {
-      throw new Error('Body não encontrado');
-    }
-
     const appleID = body.appleID;
 
     try {
@@ -93,24 +84,9 @@ module.exports = {
         });
       }
 
-      const compare = await bcrypt.compare(password, user.password);
-
-      if (!compare) {
-        return res.status(401).json({
-          success: false,
-          message: 'Senha não confere!',
-        });
-      }
-
-      const payload = {user: user._id};
-      const token = jwt.sign(payload, config.JWTSecret, {
-        expiresIn: EXPIRES_IN_MINUTES,
-      });
-
       return res.json({
         success: true,
         content: user,
-        message: token,
       });
     } catch (error) {
       return next(error);
