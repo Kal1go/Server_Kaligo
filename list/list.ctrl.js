@@ -74,7 +74,7 @@ module.exports = {
     const body = req.body || {};
     const id = body._id;
     try {
-      const list = await ListModel.findByIdAndUpdate(id, body);
+      const list = await ListModel.findByIdAndUpdate(id, body, {new: true});
       return res.json({
         success: true,
         content: list,
@@ -89,9 +89,13 @@ module.exports = {
       if (!params.id) {
         throw new Error('`_id` é requirido.');
       }
+      const list = await ListModel.findByIdAndDelete(params.id);
+      if (!list) {
+        throw new Error('List not found');
+      }
       res.json({
         success: true,
-        content: await ListModel.findByIdAndDelete(params.id),
+        content: list,
       });
     } catch (error) {
       res.status(400).json({
@@ -104,7 +108,8 @@ module.exports = {
     try {
       res.json({
         success: true,
-        content: [await ListModel.deleteMany({}), await StepModel.deleteMany({})],
+        content: [await ListModel.deleteMany({}),
+          await StepModel.deleteMany({})],
       });
     } catch (error) {
       res.status(400).json({

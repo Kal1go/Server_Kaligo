@@ -47,7 +47,6 @@ describe('Users', function() {
   it('Delete by _id', function(done) {
     request(app)
         .delete(`/api/user/delete/${UserModel._id}`)
-        .send(UserModel)
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
         .expect(200)
@@ -59,7 +58,6 @@ describe('Users', function() {
   it('Delete all', function(done) {
     request(app)
         .delete(`/api/user/delete`)
-        .send(UserModel)
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
         .expect(200)

@@ -66,7 +66,6 @@ describe('Lists', function() {
   it('Delete by _id', function(done) {
     request(app)
         .delete(`/api/list/delete/${ListModel._id}`)
-        .send(ListModel)
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
         .expect(200)
@@ -78,7 +77,6 @@ describe('Lists', function() {
   it('Delete all', function(done) {
     request(app)
         .delete(`/api/list/delete`)
-        .send(ListModel)
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
         .expect(200)
