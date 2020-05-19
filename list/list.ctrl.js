@@ -31,6 +31,7 @@ module.exports = {
     }
   },
   getByID: async (req, res, next) => {
+    const params = req.params || {};
     try {
       if (!params.id) {
         throw new Error('`_id` é requirido.');
@@ -103,7 +104,7 @@ module.exports = {
     try {
       res.json({
         success: true,
-        content: await ListModel.deleteMany({}),
+        content: [await ListModel.deleteMany({}), await StepModel.deleteMany({})],
       });
     } catch (error) {
       res.status(400).json({

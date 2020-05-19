@@ -19,7 +19,8 @@ const List = new Schema(
       numberOfForks: {type: Number, default: 0},
       type: {type: String, required: true},
       steps: [{
-        type: Step,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Step',
         autopopulate: true,
         default: [],
       }],
