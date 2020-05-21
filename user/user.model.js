@@ -8,6 +8,12 @@ const User = new Schema(
       appleID: {type: String, required: true, unique: true},
       email: {type: String},
       name: {type: String, required: true},
+      list: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'List',
+        autopopulate: false,
+        default: [],
+      }],
     },
     {timestamps: true},
 );

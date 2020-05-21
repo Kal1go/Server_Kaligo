@@ -1,5 +1,6 @@
 /* eslint-disable no-invalid-this */
 const {ListModel, StepModel} = require('./list.model');
+const {UserModel} = require('../user/user.model');
 
 module.exports = {
   getAll: async (req, res, next) => {
@@ -20,7 +21,7 @@ module.exports = {
     try {
       res.status(200).json({
         success: true,
-        content: await StepModel.find(),
+        content: await StepModel.find({}),
         message: 'Lists encontradas!',
       });
     } catch (error) {
@@ -52,12 +53,18 @@ module.exports = {
       const body = req.body || {};
       const steps = body.steps || [];
       body.steps = [];
+      const user = await UserModel.findById(body.userID);
+      if (!user) {
+        throw new Error('User not found');
+      }
       for (let i = 0; i < steps.length; i++) {
         const step = await StepModel.create(steps[i]);
         body.steps.push(step._id);
       }
       const list = await new ListModel(body);
+      user.list = list;
       await list.save();
+      await user.save();
       return res.json({
         success: true,
         message: 'List criada com successo!',
