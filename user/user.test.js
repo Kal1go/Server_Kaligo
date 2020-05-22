@@ -14,10 +14,9 @@ describe('Users', function() {
         .get('/api/user/get/all')
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
-        .expect(200)
         .end(function(err, res) {
           if (err) return done(err);
-          done();
+          done(res.body.success ? null : res.body.message);
         });
   });
   it('Create', function(done) {
@@ -26,10 +25,9 @@ describe('Users', function() {
         .send(UserModel)
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
-        .expect(200)
         .end(function(err, res) {
           if (err) return done(err);
-          done();
+          done(res.body.success ? null : res.body.message);
         });
   });
   it('Authenticate', function(done) {
@@ -38,10 +36,9 @@ describe('Users', function() {
         .send(UserModel)
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
-        .expect(200)
         .end(function(err, res) {
           if (err) return done(err);
-          done();
+          done(res.body.success ? null : res.body.message);
         });
   });
   it('Delete by _id', function(done) {
@@ -49,10 +46,9 @@ describe('Users', function() {
         .delete(`/api/user/delete/${UserModel._id}`)
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
-        .expect(200)
         .end(function(err, res) {
           if (err) return done(err);
-          done();
+          done(res.body.success ? null : res.body.message);
         });
   });
   it('Delete all', function(done) {
@@ -60,10 +56,9 @@ describe('Users', function() {
         .delete(`/api/user/delete`)
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
-        .expect(200)
         .end(function(err, res) {
           if (err) return done(err);
-          done();
+          done(res.body.success ? null : res.body.message);
         });
   });
 });

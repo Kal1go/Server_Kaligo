@@ -33,10 +33,9 @@ describe('Lists', function() {
         .send(UserModel)
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
-        .expect(200)
         .end(function(err, res) {
           if (err) return done(err);
-          done();
+          done(res.body.success ? null : res.body.message);
         });
   });
   it('Create', function(done) {
@@ -45,10 +44,9 @@ describe('Lists', function() {
         .send(ListModel)
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
-        .expect(200)
         .end(function(err, res) {
           if (err) return done(err);
-          done();
+          done(res.body.success ? null : res.body.message);
         });
   });
   it('Read All', function(done) {
@@ -56,10 +54,9 @@ describe('Lists', function() {
         .get('/api/list/get/all')
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
-        .expect(200)
         .end(function(err, res) {
           if (err) return done(err);
-          done();
+          done(res.body.success ? null : res.body.message);
         });
   });
   it('Read By ID', function(done) {
@@ -67,10 +64,9 @@ describe('Lists', function() {
         .get(`/api/list/${ListModel._id}`)
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
-        .expect(200)
         .end(function(err, res) {
           if (err) return done(err);
-          done();
+          done(res.body.success ? null : res.body.message);
         });
   });
   it('Update', function(done) {
@@ -79,21 +75,19 @@ describe('Lists', function() {
         .send(ListModel)
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
-        .expect(200)
         .end(function(err, res) {
           if (err) return done(err);
-          done();
+          done(res.body.success ? null : res.body.message);
         });
   });
   it('Delete by _id', function(done) {
     request(app)
-        .delete(`/api/list/delete/${ListModel._id}`)
+        .get(`/api/list/delete/${ListModel._id}`)
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
-        .expect(200)
         .end(function(err, res) {
           if (err) return done(err);
-          done();
+          done(res.body.success ? null : res.body.message);
         });
   });
   it('Delete all', function(done) {
@@ -101,10 +95,9 @@ describe('Lists', function() {
         .delete(`/api/list/delete`)
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
-        .expect(200)
         .end(function(err, res) {
           if (err) return done(err);
-          done();
+          done(res.body.success ? null : res.body.message);
         });
   });
   it('Delete User', function(done) {
@@ -112,10 +105,9 @@ describe('Lists', function() {
         .delete(`/api/user/delete/${UserModel._id}`)
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
-        .expect(200)
         .end(function(err, res) {
           if (err) return done(err);
-          done();
+          done(res.body.success ? null : res.body.message);
         });
   });
 });
