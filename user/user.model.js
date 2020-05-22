@@ -8,6 +8,7 @@ const User = new Schema(
       appleID: {type: String, required: true, unique: true},
       email: {type: String},
       name: {type: String, required: true},
+      level: {type: String, default: 0},
       list: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'List',

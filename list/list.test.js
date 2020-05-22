@@ -5,6 +5,7 @@ const app = require('../app');
 const UserModel = {
   name: 'Kaligo',
   email: 'kaligoTest@gmail.com.br',
+  level: '0',
   appleID: 'e942da463aa9123123ed6c864bc51a7960de922db8bd6c',
   _id: '5ec5ccce17f3910017620772',
 };

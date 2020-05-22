@@ -5,6 +5,7 @@ const UserModel = {
   name: 'Kaligo',
   email: 'kaligo@gmail.com.br',
   appleID: 'e942da463aa9ed6c864bc51a7960de922db8bd6c',
+  level: '0',
   _id: '507f191e810c19729de860ea',
 };
 
