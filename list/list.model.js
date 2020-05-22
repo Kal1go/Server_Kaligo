@@ -7,6 +7,7 @@ const Step = new Schema(
       title: {type: String, required: true},
       description: {type: String, required: true},
       url: {type: String, required: true},
+      number: {type: Number, required: true},
     },
     {timestamps: true},
 );
@@ -21,7 +22,7 @@ const List = new Schema(
       userID: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        autopopulate: true,
+        autopopulate: false,
         required: true,
       },
       steps: [{

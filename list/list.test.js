@@ -21,6 +21,7 @@ const ListModel = {
     title: 'Step 1',
     description: 'Isso descreve o passo',
     url: 'www.google.com',
+    number: 1,
     _id: '5ec44553684a1c0aa955b09d',
   }],
 };

@@ -11,7 +11,7 @@ const User = new Schema(
       list: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'List',
-        autopopulate: false,
+        autopopulate: true,
         default: [],
       }],
     },
