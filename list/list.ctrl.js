@@ -51,13 +51,20 @@ module.exports = {
   create: async (req, res, next) => {
     try {
       const body = req.body || {};
-      const steps = body.steps || [];
+      let steps = [];
+      try {
+        steps = JSON.parse(body.steps) || [];
+        body._id = undefined;
+      } catch (error) {
+        steps = body.steps;
+      }
       body.steps = [];
       const user = await UserModel.findById(body.userID);
       if (!user) {
         throw new Error('User not found');
       }
       for (let i = 0; i < steps.length; i++) {
+        steps[i]._id = undefined;
         const step = await StepModel.create(steps[i]);
         body.steps.push(step._id);
       }

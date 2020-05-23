@@ -17,6 +17,8 @@ const ListModel = {
   numberOfForks: 0,
   type: 'Playlist',
   _id: '507f191e810c19729de860ea',
+  userName: UserModel.name,
+  userLevel: UserModel.level,
   userID: UserModel._id,
   steps: [{
     title: 'Step 1',
