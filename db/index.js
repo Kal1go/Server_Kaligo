@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const URL = process.env.NODE_ENV == production ?
+const URL = process.env.NODE_ENV == 'production' ?
 'mongodb://admin:admin123321@ds023932.mlab.com:23932/rmc3_group':
 'mongodb://admin:admin123321@ds237723.mlab.com:37723/kaligo-dev';
 
