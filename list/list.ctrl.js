@@ -107,6 +107,10 @@ module.exports = {
       if (!list) {
         throw new Error('List not found');
       }
+      for (let i = 0; i <= list.steps; i++) {
+        list.steps[i] = await StepModel.findByIdAndDelete(list.steps[i]);
+      }
+      list.steps = [];
       res.json({
         success: true,
         content: list,
