@@ -16,6 +16,20 @@ module.exports = {
       });
     }
   },
+  getOne: async (req, res, next) => {
+    try {
+      res.status(200).json({
+        success: true,
+        content: await UserModel.findById(req.params.id),
+        message: 'Usuários encontrados!',
+      });
+    } catch (error) {
+      res.status(400).json({
+        success: false,
+        message: error.message,
+      });
+    }
+  },
   create: async (req, res, next) => {
     try {
       const body = req.body || {};

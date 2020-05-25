@@ -68,8 +68,9 @@ module.exports = {
         const step = await StepModel.create(steps[i]);
         body.steps.push(step._id);
       }
-      const list = await new ListModel(body);
-      user.list = list;
+      const list = await ListModel.create(body);
+      user.list.push(list);
+
       await list.save();
       await user.save();
       return res.json({

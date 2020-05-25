@@ -8,10 +8,12 @@ const {
   deleteByID,
   deleteMany,
   getAll,
+  getOne,
 } = require('./user.ctrl');
 
 
 router.get('/api/user/get/all', getAll);
+router.get('/api/user/get/one/:id', getOne);
 
 router.post('/api/user/create', create);
 router.post('/api/user/auth', authenticate);
