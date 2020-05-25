@@ -5,8 +5,8 @@ const Schema = mongoose.Schema;
 const Step = new Schema(
     {
       title: {type: String, required: true},
-      description: {type: String, required: true},
-      url: {type: String, required: true},
+      description: {type: String},
+      url: {type: String},
       number: {type: Number, required: true},
     },
     {timestamps: true},
@@ -16,7 +16,7 @@ const Step = new Schema(
 const List = new Schema(
     {
       title: {type: String, required: true},
-      description: {type: String, required: true},
+      description: {type: String},
       category: {type: String, required: true},
       numberOfForks: {type: Number, default: 0},
       type: {type: String, required: true},
