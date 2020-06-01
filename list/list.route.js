@@ -9,12 +9,15 @@ const {
   deleteMany,
   getAll,
   getByID,
+  getLast,
   getAllSteps,
 } = require('./list.ctrl');
 
 
 router.get('/api/list/get/all', getAll);
+router.get('/api/list/get/last/:number', getLast);
 router.get('/api/list/:id', getByID);
+
 
 router.post('/api/list/create', create);
 router.post('/api/list/update', update);

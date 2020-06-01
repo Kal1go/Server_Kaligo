@@ -48,6 +48,37 @@ module.exports = {
       });
     }
   },
+  getLast: async (req, res, next) => {
+    const params = req.params || {};
+    try {
+      const number = Number(params.number || 0);
+      if (!number && number != 0) {
+        throw new Error('`number` é requirido and it is of type Number');
+      }
+      const query = {};
+      const projection = {};
+      const options = {
+        sort: {
+          date: -1,
+        },
+        limit: number * 10 * 2,
+        skip: number * 10,
+      };
+
+      const lists = await ListModel.find(query, projection, options);
+
+      console.log(lists.length);
+      res.json({
+        success: true,
+        content: lists,
+      });
+    } catch (error) {
+      res.status(400).json({
+        success: false,
+        message: error.message,
+      });
+    }
+  },
   create: async (req, res, next) => {
     try {
       const body = req.body || {};
@@ -89,8 +120,37 @@ module.exports = {
     const body = req.body || {};
     const id = body._id;
     try {
-      const list = await ListModel.findByIdAndUpdate(id, body, {new: true});
-      return res.json({
+      let steps = [];
+      try {
+        steps = JSON.parse(body.steps) || [];
+      } catch (error) {
+        steps = body.steps;
+      }
+      body.steps = [];
+
+      for (let i = 0; i < steps.length; i++) {
+        let stepId;
+        let step;
+        if (steps[i]._id == '') {
+          steps[i]._id = undefined;
+          step = await StepModel.create(steps[i]);
+          stepId = step._id;
+        } else {
+          stepId = steps[i]._id;
+          step = await StepModel.findByIdAndUpdate(
+              stepId,
+              {$set: steps[i]},
+              {new: true},
+          );
+        }
+        body.steps.push(stepId);
+      }
+      const list = await ListModel.findByIdAndUpdate(
+          id,
+          {$set: body},
+          {'new': true},
+      );
+      res.json({
         success: true,
         content: list,
       });
