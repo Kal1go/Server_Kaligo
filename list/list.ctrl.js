@@ -62,11 +62,12 @@ module.exports = {
         sort: {
           date: -1,
         },
-        limit: number * 10 * 2,
+        limit: number == 0 ? 10 : number * 10 * 2,
         skip: number * 10,
       };
 
       const lists = await ListModel.find(query, projection, options);
+      console.log(lists.length);
       res.json({
         success: true,
         content: lists,
