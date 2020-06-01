@@ -11,6 +11,7 @@ const {
   getByID,
   getLast,
   getAllSteps,
+  fork,
 } = require('./list.ctrl');
 
 
@@ -21,6 +22,7 @@ router.get('/api/list/:id', getByID);
 
 router.post('/api/list/create', create);
 router.post('/api/list/update', update);
+router.post('/api/list/fork', fork);
 
 router.get('/api/list/delete/:id', deleteByID);
 router.delete('/api/list/delete', deleteMany);

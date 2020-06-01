@@ -1,6 +1,7 @@
 /* eslint-disable no-invalid-this */
 const {ListModel, StepModel} = require('./list.model');
 const {UserModel} = require('../user/user.model');
+const mongoose = require('mongoose');
 
 module.exports = {
   getAll: async (req, res, next) => {
@@ -66,11 +67,45 @@ module.exports = {
       };
 
       const lists = await ListModel.find(query, projection, options);
-
-      console.log(lists.length);
       res.json({
         success: true,
         content: lists,
+      });
+    } catch (error) {
+      res.status(400).json({
+        success: false,
+        message: error.message,
+      });
+    }
+  },
+  fork: async (req, res, next) => {
+    try {
+      const body = req.body || {};
+
+      body.steps = [];
+      const user = await UserModel.findById(body.userID);
+      const list = await ListModel.findById(body.listID);
+      if (!user || !list) {
+        throw new Error('User or List not found');
+      }
+      list.numberOfForks += 1;
+      await list.save();
+
+      list._id = new mongoose.Types.ObjectId();
+      list.isNew = true;
+      list.numberOfForks = 0;
+      list.userID = user._id;
+      list.userName = user.name;
+      list.userLevel = user.level;
+      await list.save();
+
+      user.list.push(list);
+      await user.save();
+
+      return res.json({
+        success: true,
+        message: 'Fork realizado com successo!',
+        content: list,
       });
     } catch (error) {
       res.status(400).json({
