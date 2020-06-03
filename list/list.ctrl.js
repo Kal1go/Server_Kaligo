@@ -89,8 +89,10 @@ module.exports = {
         throw new Error('User or List not found');
       }
       list.numberOfForks += 1;
+      list.hasForkedBy.push(user._id);
       await list.save();
       const parent = list._id;
+      list.hasForkedBy = [];
       list._id = new mongoose.Types.ObjectId();
       list.parent = parent;
       list.isNew = true;
@@ -211,6 +213,8 @@ module.exports = {
         const parentList = await ListModel.findById(list.parent);
         if (parentList) {
           parentList.numberOfForks -= 1;
+          parentList.hasForkedBy = parentList.hasForkedBy
+              .filter((elem) => elem != list.userID);
           await parentList.save();
         }
       }

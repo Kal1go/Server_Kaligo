@@ -21,6 +21,7 @@ const List = new Schema(
       numberOfForks: {type: Number, default: 0},
       type: {type: String, required: true},
       parent: {type: String},
+      hasForkedBy: [{type: String}],
       userName: {type: String, required: true},
       userLevel: {type: String, required: true},
       userID: {
