@@ -83,7 +83,6 @@ module.exports = {
     try {
       const body = req.body || {};
 
-      body.steps = [];
       const user = await UserModel.findById(body.userID);
       const list = await ListModel.findById(body.listID);
       if (!user || !list) {
@@ -91,8 +90,9 @@ module.exports = {
       }
       list.numberOfForks += 1;
       await list.save();
-
+      const parent = list._id;
       list._id = new mongoose.Types.ObjectId();
+      list.parent = parent;
       list.isNew = true;
       list.numberOfForks = 0;
       list.userID = user._id;
@@ -206,6 +206,13 @@ module.exports = {
       }
       for (let i = 0; i <= list.steps; i++) {
         list.steps[i] = await StepModel.findByIdAndDelete(list.steps[i]);
+      }
+      if (list.parent) {
+        const parentList = await ListModel.findById(list.parent);
+        if (parentList) {
+          parentList.numberOfForks -= 1;
+          await parentList.save();
+        }
       }
       list.steps = [];
       res.json({

@@ -20,6 +20,7 @@ const List = new Schema(
       category: {type: String, required: true},
       numberOfForks: {type: Number, default: 0},
       type: {type: String, required: true},
+      parent: {type: String},
       userName: {type: String, required: true},
       userLevel: {type: String, required: true},
       userID: {
