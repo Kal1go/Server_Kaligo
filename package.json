@@ -15,7 +15,7 @@
     "hbs": "^4.1.1",
     "helmet": "^3.22.0",
     "http-errors": "~1.6.3",
-    "mocha": "^7.1.2",
+    "mocha": "^10.2.0",
     "mongoose": "^5.9.15",
     "mongoose-autopopulate": "^0.12.2",
     "morgan": "~1.9.1",
